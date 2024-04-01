@@ -10,6 +10,7 @@ import 'package:studends/screens/homepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+ 
   await Hive.initFlutter();
   Hive.registerAdapter(ContactAdapter());
   await Hive.openBox<Contact>('contacts');

@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:studends/models/model.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:studends/servises/controller.dart';
 
-class AddContactPage extends StatelessWidget {
+class EditContactPage extends StatelessWidget {
   final ContactController contactController = Get.find();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -14,7 +14,16 @@ class AddContactPage extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
 
-  late final Rx<File?> _image = Rx<File?>(File(''));
+  late final Rx<File?> _image;
+  final int index;
+
+  EditContactPage({required Contact contact, required this.index})
+      : _image = Rx<File?>(File(contact.profileImagePath)) {
+    nameController.text = contact.name;
+    ageController.text = contact.age.toString();
+    placeController.text = contact.place;
+    phoneNumberController.text = contact.phoneNumber;
+  }
 
   Future<void> _getImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.gallery);
@@ -34,7 +43,7 @@ class AddContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Student'),
+        title: const Text('Edit Student'),
         centerTitle: true,
         toolbarHeight: 60.2,
         toolbarOpacity: 0.8,
@@ -53,7 +62,7 @@ class AddContactPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             InkWell(
-              onTap: () {
+              onTap: () async {
                 showModalBottomSheet(
                   backgroundColor: Colors.black,
                   context: context,
@@ -110,8 +119,7 @@ class AddContactPage extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: 80,
                   child: ClipOval(
-                    child: _image.value != null &&
-                            _image.value!.existsSync()
+                    child: _image.value != null && _image.value!.existsSync()
                         ? Image.file(
                             _image.value!,
                             fit: BoxFit.cover,
@@ -162,15 +170,17 @@ class AddContactPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 if (_image.value != null) {
-                  Contact newContact = Contact(
+                  Contact updatedContact = Contact(
                     name: nameController.text,
                     age: int.tryParse(ageController.text) ?? 0,
                     place: placeController.text,
                     phoneNumber: phoneNumberController.text,
                     profileImagePath: _image.value!.path,
                   );
-                  contactController.addContact(newContact);
-                  Get.back();
+                  // Call the editContact method from the controller
+                  contactController.editContact(index, updatedContact);
+                  // Pass the index back to the HomePage
+                  Get.back(result: index);
                 } else {
                   // Handle the case when no image is selected
                   Get.snackbar(
@@ -180,7 +190,7 @@ class AddContactPage extends StatelessWidget {
                   );
                 }
               },
-              child: const Text('Add'),
+              child: const Text('Save'),
             ),
           ],
         ),
