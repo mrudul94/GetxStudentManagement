@@ -2,55 +2,33 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:studends/models/model.dart';
 import 'package:studends/screens/editscreen.dart';
-
 import 'package:studends/screens/profilepage.dart';
-//import 'package:studends/screens/contact_details.dart'; // Import your ContactDetails screen
-import 'package:studends/servises/controller.dart'; // Import your ContactController
+import 'package:studends/servises/controller.dart';
 
-class GridScreen extends StatelessWidget {
+class ContactList extends StatelessWidget {
   final ContactController contactController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => contactController.contacts.isEmpty
         ? const Center(child: Text('No contacts available'))
-        : GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
+        : ListView.builder(
             itemCount: contactController.contacts.length,
             itemBuilder: (context, index) {
               Contact contact = contactController.contacts[index];
-              return GestureDetector(
-                onTap: () {
-                  Get.to(ProfileScreen(), arguments: {
-                    'profileImagePath': contact.profileImagePath,
-                    'name': contact.name,
-                    'place': contact.place,
-                    'age': contact.age,
-                    'phoneNumber': contact.phoneNumber,
-                    'index': index,
-                  });
-                },
-                child: Card(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            FileImage(File(contact.profileImagePath)),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        contact.name,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      Text(contact.place),
-                      Row(
+              return Column(
+                children: [
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage:
+                          FileImage(File(contact.profileImagePath)),
+                    ),
+                    title: Text(contact.name),
+                    subtitle: Text(contact.place),
+                    trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
@@ -87,9 +65,19 @@ class GridScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    ],
+                    onTap: () {
+                      Get.to(ProfileScreen(), arguments: {
+                        'profileImagePath': contact.profileImagePath,
+                        'name': contact.name,
+                        'place': contact.place,
+                        'age': contact.age,
+                        'phoneNumber': contact.phoneNumber,
+                        'index': index,
+                      });
+                    },
                   ),
-                ),
+                  const Divider()
+                ],
               );
             },
           ));

@@ -8,12 +8,10 @@ import 'package:studends/servises/controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   final ContactController controller = Get.put(ContactController());
-
   ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve arguments passed from the home page
     final Map<String, dynamic> arguments = Get.arguments ?? {};
 
     return Scaffold(
@@ -40,7 +38,6 @@ class ProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 150),
                 child: CircleAvatar(
                   radius: 80,
-                  // Load profile image from file path
                   backgroundImage:
                       FileImage(File(arguments['profileImagePath'] ?? '')),
                 ),
@@ -77,51 +74,47 @@ class ProfileScreen extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(
+                height: 60,
+              ),
               Row(
+                //crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle edit button onPressed event
-                      Get.to(EditContactPage(
-                          contact: Contact(
-                            profileImagePath: arguments['profileImagePath'],
-                            name: arguments['name'],
-                            age: arguments['age'],
-                            place: arguments['place'],
-                            phoneNumber: arguments['phoneNumber'],
-                          ),
-                          index: arguments['index']));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                    ),
-                    child: const Icon(Icons.edit),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        // Retrieve the contact object from the controller's list using the index
+                        Contact contact =
+                            controller.contacts[arguments['index']];
+                        // Navigate to the EditContactPage with the retrieved contact and index
+                        Get.to(EditContactPage(
+                            contact: contact, index: arguments['index']));
+                      },
+                      icon: const Icon(Icons.edit),
+                      label: const Text("Edit")),
+
+                  // IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                  const SizedBox(
+                    width: 30,
                   ),
-                  const SizedBox(width: 20), // Add spacing between buttons
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.defaultDialog(
-                        title: "Are you sure you want to delete?",
-                        content: const Text(""),
-                        textCancel: "Cancel",
-                        textConfirm: "Delete",
-                        onConfirm: () {
-                          // Call deleteContactByIndex method with the index of the contact
-                          controller.deleteContactByIndex(arguments['index']);
-                          Get.back(); // Close the dialog
-                          Get.back();
-                        },
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red, // Change button color to red
-                    ),
-                    child: const Icon(Icons.delete),
-                  ),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        Get.defaultDialog(
+                          title: "Are you sure you want to delete?",
+                          content: const Text(""),
+                          textCancel: "Cancel",
+                          textConfirm: "Delete",
+                          onConfirm: () {
+                            controller.deleteContactByIndex(arguments['index']);
+                            Get.back();
+                            Get.back();
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.delete),
+                      label: const Text("Delete")),
                 ],
-              ),
+              )
             ],
           ),
         ),
