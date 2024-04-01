@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studends/models/model.dart';
+import 'package:studends/screens/loginscreen.dart';
 
 class ContactController extends GetxController {
   final _contacts = <Contact>[].obs;
@@ -29,5 +32,19 @@ class ContactController extends GetxController {
     final contactsBox = Hive.box<Contact>('contacts');
     await contactsBox.putAt(index, updatedContact);
     _contacts[index] = updatedContact;
+  }
+   Future<void> signOut() async {
+    await Get.defaultDialog(
+      title: "Are you sure you want to logout?",
+      content:Text(""),
+      onCancel: () {},
+      textCancel: "Cancel",
+      confirmTextColor: Colors.white,
+      onConfirm: () async {
+        final SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
+        await _sharedPrefs.clear();
+        Get.offAll(() => ScreenLogin());
+      },
+    );
   }
 }

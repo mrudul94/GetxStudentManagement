@@ -24,14 +24,22 @@ class HomePage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Students'),
+   backgroundColor: const Color.fromARGB(255, 154, 14, 58),
+        
+          title: const Center(child: Text('Students')),
+          actions: [
+            IconButton(onPressed: (){
+              contactController.signOut();
+              
+            }, icon: const Icon(Icons.exit_to_app))
+          ],
           bottom: const TabBar(
             
             tabs: [
               Tab(text: 'List'),
               Tab(text: 'Grid'),
             ],
-           indicatorColor: Colors.black,
+           indicatorColor: Color.fromARGB(255, 238, 235, 235),
           ),
         ),
         body: TabBarView(

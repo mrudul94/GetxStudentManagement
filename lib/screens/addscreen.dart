@@ -49,8 +49,8 @@ class AddContactPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
+         // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             InkWell(
               onTap: () {
