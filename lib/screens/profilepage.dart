@@ -78,22 +78,22 @@ class ProfileScreen extends StatelessWidget {
                 height: 60,
               ),
               Row(
-                //crossAxisAlignment: CrossAxisAlignment.end,
+      
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
                       onPressed: () {
-                        // Retrieve the contact object from the controller's list using the index
+            
                         Contact contact =
                             controller.contacts[arguments['index']];
-                        // Navigate to the EditContactPage with the retrieved contact and index
+                      
                         Get.to(EditContactPage(
                             contact: contact, index: arguments['index']));
                       },
                       icon: const Icon(Icons.edit),
                       label: const Text("Edit")),
 
-                  // IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+          
                   const SizedBox(
                     width: 30,
                   ),

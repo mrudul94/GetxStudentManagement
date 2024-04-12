@@ -36,13 +36,13 @@ class ContactController extends GetxController {
    Future<void> signOut() async {
     await Get.defaultDialog(
       title: "Are you sure you want to logout?",
-      content:Text(""),
+      content:const Text(""),
       onCancel: () {},
       textCancel: "Cancel",
       confirmTextColor: Colors.white,
       onConfirm: () async {
-        final SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
-        await _sharedPrefs.clear();
+        final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+        await sharedPrefs.clear();
         Get.offAll(() => ScreenLogin());
       },
     );

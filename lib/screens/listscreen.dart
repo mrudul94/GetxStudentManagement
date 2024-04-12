@@ -11,6 +11,8 @@ import 'package:studends/servises/controller.dart';
 class ContactList extends StatelessWidget {
   final ContactController contactController = Get.find();
 
+ ContactList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => contactController.contacts.isEmpty
@@ -36,7 +38,7 @@ class ContactList extends StatelessWidget {
                             final result = await Get.to(EditContactPage(
                                 contact: contact, index: index));
                             if (result != null) {
-                              // Update the existing contact
+                           
                               contactController.contacts[index] =
                                   contactController.contacts[result];
                             }
@@ -60,7 +62,7 @@ class ContactList extends StatelessWidget {
                           },
                           icon: const Icon(
                             Icons.delete,
-                            color: const Color.fromARGB(255, 154, 14, 58),
+                            color:  Color.fromARGB(255, 154, 14, 58),
                           ),
                         )
                       ],

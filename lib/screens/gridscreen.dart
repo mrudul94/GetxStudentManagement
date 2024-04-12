@@ -1,16 +1,15 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studends/models/model.dart';
 import 'package:studends/screens/editscreen.dart';
-
 import 'package:studends/screens/profilepage.dart';
-//import 'package:studends/screens/contact_details.dart'; // Import your ContactDetails screen
-import 'package:studends/servises/controller.dart'; // Import your ContactController
+import 'package:studends/servises/controller.dart';
 
 class GridScreen extends StatelessWidget {
   final ContactController contactController = Get.find();
+
+  GridScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,50 +42,49 @@ class GridScreen extends StatelessWidget {
                         backgroundImage:
                             FileImage(File(contact.profileImagePath)),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         contact.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Text(contact.place),
                       Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            final result = await Get.to(EditContactPage(
-                                contact: contact, index: index));
-                            if (result != null) {
-                              // Update the existing contact
-                              contactController.contacts[index] =
-                                  contactController.contacts[result];
-                            }
-                          },
-                          icon: const Icon(Icons.edit),
-                          color: Colors.black,
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Get.defaultDialog(
-                              title: "Are you sure you want to delete?",
-                              content: const Text(""),
-                              textCancel: "Cancel",
-                              textConfirm: "Delete",
-                              onConfirm: () {
-                                contactController
-                                    .deleteContactByIndex(index);
-                                Get.back();
-                              },
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.delete,
-                            color: const Color.fromARGB(255, 154, 14, 58),
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () async {
+                              final result = await Get.to(EditContactPage(
+                                  contact: contact, index: index));
+                              if (result != null) {
+                             
+                                contactController.contacts[index] =
+                                    contactController.contacts[result];
+                              }
+                            },
+                            icon: const Icon(Icons.edit),
+                            color: Colors.black,
                           ),
-                        )
-                      ],
-                    ),
+                          IconButton(
+                            onPressed: () {
+                              Get.defaultDialog(
+                                title: "Are you sure you want to delete?",
+                                content: const Text(""),
+                                textCancel: "Cancel",
+                                textConfirm: "Delete",
+                                onConfirm: () {
+                                  contactController.deleteContactByIndex(index);
+                                  Get.back();
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Color.fromARGB(255, 154, 14, 58),
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),

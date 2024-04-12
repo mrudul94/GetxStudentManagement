@@ -17,7 +17,7 @@ class EditContactPage extends StatelessWidget {
   late final Rx<File?> _image;
   final int index;
 
-  EditContactPage({required Contact contact, required this.index})
+  EditContactPage({super.key, required Contact contact, required this.index})
       : _image = Rx<File?>(File(contact.profileImagePath)) {
     nameController.text = contact.name;
     ageController.text = contact.age.toString();
@@ -25,19 +25,6 @@ class EditContactPage extends StatelessWidget {
     phoneNumberController.text = contact.phoneNumber;
   }
 
-  Future<void> _getImage() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      _image.value = File(pickedFile.path);
-    }
-  }
-
-  Future<void> _getImageCamera() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      _image.value = File(pickedFile.path);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +123,8 @@ class EditContactPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 15),
-            Align(
+            const SizedBox(height: 15),
+            const Align(
               alignment: Alignment.center,
               child: Text(
                 "Profile",
@@ -148,7 +135,7 @@ class EditContactPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             TextFormField(
               controller: nameController,
               decoration: const InputDecoration(labelText: 'Name'),
@@ -177,12 +164,12 @@ class EditContactPage extends StatelessWidget {
                     phoneNumber: phoneNumberController.text,
                     profileImagePath: _image.value!.path,
                   );
-                  // Call the editContact method from the controller
+           
                   contactController.editContact(index, updatedContact);
-                  // Pass the index back to the HomePage
+              
                   Get.back(result: index);
                 } else {
-                  // Handle the case when no image is selected
+                  
                   Get.snackbar(
                     'Error',
                     'Please select an image',
@@ -196,5 +183,24 @@ class EditContactPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+
+  
+  Future<void> _getImage() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _image.value = File(pickedFile.path);
+    }
+  }
+
+  Future<void> _getImageCamera() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await _picker.getImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      _image.value = File(pickedFile.path);
+    }
   }
 }

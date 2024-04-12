@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studends/main.dart';
 import 'package:studends/screens/homepage.dart';
@@ -12,6 +10,8 @@ class ScreenLogin extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
   final RxBool _isDataMatched = true.obs;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  ScreenLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,17 +96,16 @@ class ScreenLogin extends StatelessWidget {
   }
 
   void checkLogin() async {
-    final _username = _usernameController.text;
-    final _password = _passwordController.text;
-    if (_username == 'febin' && _password == '0000' ||
-        _username == 'noufan' && _password == '1234') {
-      final SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
-      await _sharedPrefs.setBool(save_key_name, true);
+    final username = _usernameController.text;
+    final password = _passwordController.text;
+    if (username == 'febin' && password == '0000' ||
+        username == 'noufan' && password == '1234') {
+      final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+      await sharedPrefs.setBool(save_key_name, true);
       Get.off(() => HomePage());
       print('Username and password match');
     } else {
       _isDataMatched.value = false;
-      print('Username and password do not match');
     }
   }
 }

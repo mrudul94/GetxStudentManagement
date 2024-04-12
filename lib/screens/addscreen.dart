@@ -16,19 +16,9 @@ class AddContactPage extends StatelessWidget {
 
   late final Rx<File?> _image = Rx<File?>(File(''));
 
-  Future<void> _getImage() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      _image.value = File(pickedFile.path);
-    }
-  }
+  AddContactPage({super.key});
 
-  Future<void> _getImageCamera() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      _image.value = File(pickedFile.path);
-    }
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -128,8 +118,8 @@ class AddContactPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 15),
-            Align(
+            const SizedBox(height: 15),
+            const Align(
               alignment: Alignment.center,
               child: Text(
                 "Profile",
@@ -140,7 +130,7 @@ class AddContactPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             TextFormField(
               controller: nameController,
               decoration: const InputDecoration(labelText: 'Name'),
@@ -172,7 +162,7 @@ class AddContactPage extends StatelessWidget {
                   contactController.addContact(newContact);
                   Get.back();
                 } else {
-                  // Handle the case when no image is selected
+                 
                   Get.snackbar(
                     'Error',
                     'Please select an image',
@@ -186,5 +176,22 @@ class AddContactPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+   Future<void> _getImage() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _image.value = File(pickedFile.path);
+    }
+  }
+
+  Future<void> _getImageCamera() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await _picker.getImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      _image.value = File(pickedFile.path);
+    }
   }
 }

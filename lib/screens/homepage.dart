@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   final ContactController contactController = Get.put(ContactController());
 
   HomePage({Key? key}) : super(key: key) {
-    // Fetch contacts when the home screen is initialized
+
     contactController.fetchContacts();
   }
 

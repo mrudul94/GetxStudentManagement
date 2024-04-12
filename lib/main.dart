@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:studends/models/model.dart';
 
@@ -8,6 +8,7 @@ import 'package:studends/screens/screensplash.dart';
 
 
 
+// ignore: constant_identifier_names
 const save_key_name = 'userloggedin';
 
 Future <void> main() async {
@@ -16,10 +17,12 @@ Future <void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ContactAdapter());
   await Hive.openBox<Contact>('contacts');
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
