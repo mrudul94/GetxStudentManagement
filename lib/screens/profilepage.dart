@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         elevation: 0.00,
-        backgroundColor: const Color.fromARGB(255, 154, 14, 58),
+        backgroundColor:  Colors.blue,
       ),
       body: SafeArea(
         child: Center(
@@ -51,27 +51,36 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Text(
-                'Place : ${arguments['place']}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
+              Padding(
+                padding: const EdgeInsets.only(right: 48),
+                child: Text(
+                  'Place : ${arguments['place']}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                'Age   : ${arguments['age'].toString()}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
+              Padding(
+                padding: const EdgeInsets.only(right: 40),
+                child: Text(
+                  'Age   : ${arguments['age'].toString()}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                'Number: ${arguments['phoneNumber']}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'Number: ${arguments['phoneNumber']}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -87,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                         Contact contact =
                             controller.contacts[arguments['index']];
                       
-                        Get.to(EditContactPage(
+                        Get.to(()=>EditContactPage(
                             contact: contact, index: arguments['index']));
                       },
                       icon: const Icon(Icons.edit),

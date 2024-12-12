@@ -41,145 +41,147 @@ class EditContactPage extends StatelessWidget {
           ),
         ),
         elevation: 0.00,
-        backgroundColor: const Color.fromARGB(255, 154, 14, 58),
+        backgroundColor:  Colors.blue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            InkWell(
-              onTap: () async {
-                showModalBottomSheet(
-                  backgroundColor: Colors.black,
-                  context: context,
-                  builder: (BuildContext builderContext) {
-                    return SizedBox(
-                      height: 140,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  await _getImage();
-                                },
-                                icon: const Icon(
-                                  Icons.image,
-                                  color: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              InkWell(
+                onTap: () async {
+                  showModalBottomSheet(
+                    backgroundColor: Colors.black,
+                    context: context,
+                    builder: (BuildContext builderContext) {
+                      return SizedBox(
+                        height: 140,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    await _getImage();
+                                  },
+                                  icon: const Icon(
+                                    Icons.image,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              const Text(
-                                "Gallery",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  await _getImageCamera();
-                                },
-                                icon: const Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
+                                const Text(
+                                  "Gallery",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    await _getImageCamera();
+                                  },
+                                  icon: const Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              const Text(
-                                "Camera",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              child: Obx(
-                () => CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 80,
-                  child: ClipOval(
-                    child: _image.value != null && _image.value!.existsSync()
-                        ? Image.file(
-                            _image.value!,
-                            fit: BoxFit.cover,
-                            width: 160.0,
-                            height: 160.0,
-                          )
-                        : Image.network(
-                            "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=",
-                            fit: BoxFit.cover,
-                            width: 160.0,
-                            height: 160.0,
-                          ),
+                                const Text(
+                                  "Camera",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Obx(
+                  () => CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 80,
+                    child: ClipOval(
+                      child: _image.value != null && _image.value!.existsSync()
+                          ? Image.file(
+                              _image.value!,
+                              fit: BoxFit.cover,
+                              width: 160.0,
+                              height: 160.0,
+                            )
+                          : Image.network(
+                              "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=",
+                              fit: BoxFit.cover,
+                              width: 160.0,
+                              height: 160.0,
+                            ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 15),
-            const Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Profile",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                  fontStyle: FontStyle.italic,
+              const SizedBox(height: 15),
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 50),
-            TextFormField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
-            ),
-            TextFormField(
-              controller: ageController,
-              decoration: const InputDecoration(labelText: 'Age'),
-              keyboardType: TextInputType.number,
-            ),
-            TextFormField(
-              controller: placeController,
-              decoration: const InputDecoration(labelText: 'Place'),
-            ),
-            TextFormField(
-              controller: phoneNumberController,
-              decoration: const InputDecoration(labelText: 'Phone Number'),
-              keyboardType: TextInputType.phone,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (_image.value != null) {
-                  Contact updatedContact = Contact(
-                    name: nameController.text,
-                    age: int.tryParse(ageController.text) ?? 0,
-                    place: placeController.text,
-                    phoneNumber: phoneNumberController.text,
-                    profileImagePath: _image.value!.path,
-                  );
-           
-                  contactController.editContact(index, updatedContact);
-              
-                  Get.back(result: index);
-                } else {
-                  
-                  Get.snackbar(
-                    'Error',
-                    'Please select an image',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                }
-              },
-              child: const Text('Save'),
-            ),
-          ],
+              const SizedBox(height: 50),
+              TextFormField(
+                controller: nameController,
+                decoration: const InputDecoration(labelText: 'Name'),
+              ),
+              TextFormField(
+                controller: ageController,
+                decoration: const InputDecoration(labelText: 'Age'),
+                keyboardType: TextInputType.number,
+              ),
+              TextFormField(
+                controller: placeController,
+                decoration: const InputDecoration(labelText: 'Place'),
+              ),
+              TextFormField(
+                controller: phoneNumberController,
+                decoration: const InputDecoration(labelText: 'Phone Number'),
+                keyboardType: TextInputType.phone,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (_image.value != null) {
+                    Contact updatedContact = Contact(
+                      name: nameController.text,
+                      age: int.tryParse(ageController.text) ?? 0,
+                      place: placeController.text,
+                      phoneNumber: phoneNumberController.text,
+                      profileImagePath: _image.value!.path,
+                    );
+             
+                    contactController.editContact(index, updatedContact);
+                
+                    Get.back(result: index);
+                  } else {
+                    
+                    Get.snackbar(
+                      'Error',
+                      'Please select an image',
+                      snackPosition: SnackPosition.BOTTOM,
+                    );
+                  }
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
         ),
       ),
     );

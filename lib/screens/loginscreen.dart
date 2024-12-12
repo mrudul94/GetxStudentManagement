@@ -98,8 +98,8 @@ class ScreenLogin extends StatelessWidget {
   void checkLogin() async {
     final username = _usernameController.text;
     final password = _passwordController.text;
-    if (username == 'febin' && password == '0000' ||
-        username == 'noufan' && password == '1234') {
+    if (username == 'admin' && password == '0000' ||
+        username == 'user' && password == '1234') {
       final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
       await sharedPrefs.setBool(save_key_name, true);
       Get.off(() => HomePage());

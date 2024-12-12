@@ -24,7 +24,7 @@ class GridScreen extends StatelessWidget {
               Contact contact = contactController.contacts[index];
               return GestureDetector(
                 onTap: () {
-                  Get.to(ProfileScreen(), arguments: {
+                  Get.to(()=>ProfileScreen(), arguments: {
                     'profileImagePath': contact.profileImagePath,
                     'name': contact.name,
                     'place': contact.place,
@@ -54,7 +54,7 @@ class GridScreen extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () async {
-                              final result = await Get.to(EditContactPage(
+                              final result = await Get.to(()=>EditContactPage(
                                   contact: contact, index: index));
                               if (result != null) {
                              

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +12,6 @@ class HomePage extends StatelessWidget {
   final ContactController contactController = Get.put(ContactController());
 
   HomePage({Key? key}) : super(key: key) {
-
     contactController.fetchContacts();
   }
 
@@ -24,26 +21,35 @@ class HomePage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-   backgroundColor: const Color.fromARGB(255, 154, 14, 58),
-        
-          title: const Center(child: Text('Students')),
+          backgroundColor: Colors.blue,
+          title: const Center(
+              child: Padding(
+            padding: EdgeInsets.only(left: 50),
+            child: Text(
+              'Students',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+          )),
           actions: [
-            IconButton(onPressed: (){
-              contactController.signOut();
-              
-            }, icon: const Icon(Icons.exit_to_app))
+            IconButton(
+                onPressed: () {
+                  contactController.signOut();
+                },
+                icon: const Icon(
+                  Icons.exit_to_app,
+                  color: Colors.white,
+                ))
           ],
           bottom: const TabBar(
-            
             tabs: [
               Tab(text: 'List'),
               Tab(text: 'Grid'),
             ],
-           indicatorColor: Color.fromARGB(255, 238, 235, 235),
+            indicatorColor: Color.fromARGB(255, 238, 235, 235),
           ),
         ),
         body: TabBarView(
-          
           children: [
             ContactList(),
             GridScreen(),
@@ -51,7 +57,7 @@ class HomePage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.to(AddContactPage());
+            Get.to(()=>AddContactPage());
           },
           child: const Icon(Icons.add),
         ),

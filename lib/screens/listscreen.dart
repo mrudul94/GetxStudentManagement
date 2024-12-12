@@ -35,7 +35,7 @@ class ContactList extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            final result = await Get.to(EditContactPage(
+                            final result = await Get.to(()=>EditContactPage(
                                 contact: contact, index: index));
                             if (result != null) {
                            
